@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>
+  (function(){
+    try{
+      var t = localStorage.getItem('theme-preference');
+      if(t === 'light' || t === 'dark'){
+        document.documentElement.setAttribute('data-theme', t);
+      }
+    }catch(e){}
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BTS100 70K — Training Checklist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0c1210;
+    --bg-elevated: #131c17;
+    --card: #182219;
+    --card-border: #263229;
+    --ink: #EAE6D9;
+    --ink-dim: #8fa08f;
+    --ink-faint: #5c6b5e;
+    --moss: #7f9d6f;
+    --transisi: #cf9f3f;
+    --peak: #c1552c;
+    --taper: #7fa3b3;
+    --amber: #f2b84b;
+    --violet: #a390c9;
+    --danger: #c1552c;
+    --overlay: rgba(255,255,255,0.03);
+    --radius: 14px;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+  :root[data-theme="light"]{
+    --bg: #f4f1e6;
+    --bg-elevated: #ffffff;
+    --card: #ffffff;
+    --card-border: #e2ddc9;
+    --ink: #1c2420;
+    --ink-dim: #5c6b5e;
+    --ink-faint: #8b9389;
+    --moss: #5f7d4f;
+    --transisi: #a9791f;
+    --peak: #a03f1c;
+    --taper: #3f6d7d;
+    --amber: #b97c17;
+    --violet: #7c63a8;
+    --danger: #a03f1c;
+    --overlay: rgba(0,0,0,0.04);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);}
+  html{transition:background-color .2s ease;}
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(127,157,111,0.14), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 0%, rgba(242,184,75,0.08), transparent 60%),
+      var(--bg);
+    padding-bottom:48px;
+    transition:background-color .2s ease, color .2s ease;
+  }
+  ::selection{background:var(--amber); color:#1a1408;}
+
+  /* ---------- Header ---------- */
+  .topbar{
+    padding:22px 18px 10px;
+    max-width:900px; margin:0 auto;
+  }
+  .topbar-row{display:flex; align-items:flex-start; justify-content:space-between; gap:12px;}
+  .theme-toggle{
+    flex:0 0 auto; width:34px; height:34px; border-radius:10px;
+    background:var(--bg-elevated); border:1px solid var(--card-border); color:var(--ink-dim);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; margin-top:2px;
+    transition:border-color .15s, color .15s;
+  }
+  .theme-toggle:active{border-color:var(--amber); color:var(--amber);}
+  .theme-toggle svg{width:17px;height:17px;}
+  .theme-toggle .icon-moon{display:none;}
+  :root[data-theme="light"] .theme-toggle .icon-sun{display:none;}
+  :root[data-theme="light"] .theme-toggle .icon-moon{display:block;}
+  .eyebrow{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--moss); display:flex; align-items:center; gap:8px; margin-bottom:6px;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--moss); box-shadow:0 0 8px var(--moss);}
+  h1{
+    font-family:var(--font-display); font-weight:700; font-size:26px; margin:0 0 4px;
+    letter-spacing:-0.01em; color:var(--ink);
+  }
+  .subline{
+    font-size:13px; color:var(--ink-dim); font-family:var(--font-body);
+    display:flex; flex-wrap:wrap; gap:6px 14px; align-items:center;
+  }
+  .subline b{color:var(--ink); font-weight:600;}
+  .countdown-chip{
+    font-family:var(--font-mono); font-size:12px; background:rgba(242,184,75,0.12);
+    color:var(--amber); border:1px solid rgba(242,184,75,0.35); padding:3px 9px; border-radius:999px;
+  }
+
+  /* ---------- Elevation profile (signature element) ---------- */
+  .profile-wrap{
+    max-width:900px; margin:14px auto 0; padding:0 18px;
+  }
+  .profile-card{
+    background:var(--bg-elevated); border:1px solid var(--card-border); border-radius:var(--radius);
+    padding:14px 14px 8px; position:relative; overflow:hidden;
+  }
+  .profile-label{
+    font-family:var(--font-mono); font-size:10px; color:var(--ink-faint); letter-spacing:.1em;
+    text-transform:uppercase; margin-bottom:6px; display:flex; justify-content:space-between;
+  }
+  #elevSvg{ display:block; width:100%; height:auto; cursor:pointer; touch-action: pan-y; }
+  .legend{
+    display:flex; gap:14px; flex-wrap:wrap; padding:8px 2px 10px; font-family:var(--font-mono); font-size:10.5px; color:var(--ink-dim);
+  }
+  .legend span{display:inline-flex; align-items:center; gap:5px;}
+  .legend i{width:9px;height:9px;border-radius:2px; display:inline-block;}
+
+  /* ---------- Week rail ---------- */
+  .week-rail{
+    max-width:900px; margin:14px auto 0; padding:0 18px;
+    display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding-bottom:4px;
+  }
+  .week-rail::-webkit-scrollbar{display:none;}
+  .week-pill{
+    flex:0 0 auto; font-family:var(--font-mono); font-size:11.5px; color:var(--ink-dim);
+    background:var(--bg-elevated); border:1px solid var(--card-border); border-radius:10px;
+    padding:8px 12px; cursor:pointer; min-width:56px; text-align:center; position:relative;
+    transition:border-color .15s, color .15s, background .15s;
+  }
+  .week-pill .w{display:block; font-weight:600; font-size:12.5px; color:var(--ink);}
+  .week-pill .ring{
+    position:absolute; top:4px; right:4px; width:6px;height:6px;border-radius:50%;
+  }
+  .week-pill.active{border-color:var(--amber); background:rgba(242,184,75,0.08); color:var(--amber);}
+  .week-pill.active .w{color:var(--amber);}
+  .week-pill.today-week{box-shadow:0 0 0 1px var(--moss) inset;}
+
+  /* ---------- Main / week header ---------- */
+  main{max-width:900px; margin:0 auto; padding:16px 18px 0;}
+  .week-header{
+    display:flex; align-items:baseline; justify-content:space-between; margin:6px 2px 12px; flex-wrap:wrap; gap:6px;
+  }
+  .week-title{font-family:var(--font-display); font-weight:700; font-size:19px;}
+  .phase-tag{
+    font-family:var(--font-mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.08em;
+    padding:3px 9px; border-radius:999px; border:1px solid currentColor;
+  }
+  .week-meta{font-family:var(--font-mono); font-size:12px; color:var(--ink-dim);}
+
+  /* ---------- Day cards ---------- */
+  .day-card{
+    background:var(--card); border:1px solid var(--card-border); border-radius:var(--radius);
+    margin-bottom:10px; overflow:hidden; transition:border-color .15s;
+  }
+  .day-card.is-today{border-color:var(--amber); box-shadow:0 0 0 1px rgba(242,184,75,0.25);}
+  .day-card.is-race{border-color:var(--amber); background:linear-gradient(160deg, rgba(242,184,75,0.10), var(--card) 55%);}
+  .day-card.is-past-incomplete{opacity:0.72;}
+  .day-card.is-future{opacity:0.78;}
+  .day-head{
+    display:flex; align-items:center; justify-content:space-between; padding:11px 14px 8px;
+  }
+  .day-head-left{display:flex; align-items:baseline; gap:9px;}
+  .day-name{font-family:var(--font-display); font-weight:700; font-size:15px;}
+  .day-date{font-family:var(--font-mono); font-size:11px; color:var(--ink-faint);}
+  .today-badge{
+    font-family:var(--font-mono); font-size:9.5px; color:var(--amber); border:1px solid var(--amber);
+    padding:1px 6px; border-radius:999px; letter-spacing:.06em;
+  }
+  .day-progress{font-family:var(--font-mono); font-size:11px; color:var(--ink-dim);}
+  .item-list{padding:2px 8px 10px;}
+  .item{
+    display:flex; align-items:flex-start; gap:10px; padding:8px 6px; border-radius:9px; cursor:pointer;
+    transition:background .12s;
+  }
+  .item:active{background:var(--overlay);}
+  .item.disabled{cursor:not-allowed;}
+  .item.disabled:active{background:none;}
+  .item.disabled .checkbox{border-color:var(--ink-faint); opacity:0.4;}
+  .item.disabled .item-text{color:var(--ink-faint); opacity:0.65;}
+  .checkbox{
+    flex:0 0 auto; width:20px; height:20px; border-radius:6px; border:1.5px solid var(--ink-faint);
+    margin-top:1px; display:flex; align-items:center; justify-content:center; transition:all .12s;
+  }
+  .item.done .checkbox{background:var(--moss); border-color:var(--moss);}
+  .checkbox svg{width:12px;height:12px; opacity:0; transform:scale(.6); transition:all .12s;}
+  .item.done .checkbox svg{opacity:1; transform:scale(1);}
+  .item-text{font-size:13.5px; line-height:1.4; color:var(--ink);}
+  .item.done .item-text{color:var(--ink-faint); text-decoration:line-through; text-decoration-color:var(--ink-faint);}
+  .item-text b.hl{color:var(--amber); font-weight:600;}
+  .item.done .item-text b.hl{color:var(--ink-faint);}
+  .tag-row{display:flex; gap:6px; flex-wrap:wrap; padding:0 14px 12px;}
+  .meta-chip{
+    font-family:var(--font-mono); font-size:10.5px; color:var(--ink-dim); background:var(--overlay);
+    border:1px solid var(--card-border); padding:2px 8px; border-radius:999px;
+  }
+  .meta-chip.massage{color:var(--violet); border-color:rgba(163,144,201,0.4); background:rgba(163,144,201,0.08);}
+
+  /* ---------- Footer / stats ---------- */
+  .stats-bar{
+    max-width:900px; margin:18px auto 0; padding:0 18px;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:8px;
+  }
+  .stat{
+    background:var(--bg-elevated); border:1px solid var(--card-border); border-radius:var(--radius);
+    padding:12px 12px; text-align:center;
+  }
+  .stat .num{font-family:var(--font-display); font-weight:700; font-size:20px; color:var(--ink);}
+  .stat .lbl{font-family:var(--font-mono); font-size:9.5px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.06em; margin-top:2px;}
+
+  .reset-row{max-width:900px; margin:16px auto 0; padding:0 18px; display:flex; justify-content:center;}
+  .reset-btn{
+    font-family:var(--font-mono); font-size:11px; color:var(--ink-faint); background:none; border:1px solid var(--card-border);
+    padding:7px 14px; border-radius:999px; cursor:pointer;
+  }
+  .reset-btn:active{color:var(--danger); border-color:var(--danger);}
+
+  .toast{
+    position:fixed; bottom:18px; left:50%; transform:translateX(-50%) translateY(10px); opacity:0;
+    background:var(--bg-elevated); border:1px solid var(--card-border); color:var(--ink);
+    font-family:var(--font-mono); font-size:12px; padding:9px 16px; border-radius:999px; pointer-events:none;
+    transition:all .25s;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  @media (max-width: 420px){
+    h1{font-size:22px;}
+    .stats-bar{grid-template-columns:repeat(3,1fr); gap:6px;}
+  }
+</style>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0c1210">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BTS100 Checklist">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="icon" href="/icons/icon-192.png">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-row">
+    <div>
+      <div class="eyebrow"><span class="dot"></span>16-WEEK PROGRAM · 4 PHASES</div>
+      <h1>BTS100 — 70K Category</h1>
+      <div class="subline">
+        <span>Start <b>01:00</b>, Sat Nov 7, 2026</span>
+        <span class="countdown-chip" id="countdownChip">—</span>
+      </div>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode" type="button">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="profile-wrap">
+  <div class="profile-card">
+    <div class="profile-label"><span>WEEKLY TRAINING LOAD (KM)</span><span id="elevRangeLabel"></span></div>
+    <svg id="elevSvg" viewBox="0 0 800 170" preserveAspectRatio="none"></svg>
+    <div class="legend">
+      <span><i style="background:var(--moss)"></i>Base</span>
+      <span><i style="background:var(--transisi)"></i>Transition</span>
+      <span><i style="background:var(--peak)"></i>Peak</span>
+      <span><i style="background:var(--taper)"></i>Taper</span>
+      <span><i style="background:var(--amber)"></i>You are here</span>
+    </div>
+  </div>
+</div>
+
+<div class="week-rail" id="weekRail"></div>
+
+<main>
+  <div class="week-header">
+    <div class="week-title" id="weekTitle">Week 1</div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span class="phase-tag" id="phaseTag">Base</span>
+      <span class="week-meta" id="weekMeta"></span>
+    </div>
+  </div>
+  <div id="daysContainer"></div>
+</main>
+
+<div class="stats-bar">
+  <div class="stat"><div class="num" id="statDone">0</div><div class="lbl">Sessions Done</div></div>
+  <div class="stat"><div class="num" id="statPct">0%</div><div class="lbl">Total Progress</div></div>
+  <div class="stat"><div class="num" id="statDaysLeft">—</div><div class="lbl">Days to Race</div></div>
+</div>
+
+<div class="reset-row">
+  <button class="reset-btn" id="resetBtn">Reset all checkmarks</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PROGRAM_DATA = [{"week":1,"phase":"Base","date_range":"20–26 Jul","label":"","total":"±53.8km","days":[{"date":"2026-07-20","day_name":"Monday","hari_label":"Monday","items":[{"text":"Strength","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 40'","hr_zone":"— / Z1–Z2","distance":"— / 5.5km"},{"date":"2026-07-21","day_name":"Tuesday","hari_label":"Tuesday","items":[{"text":"Easy road","highlight":false}],"duration":"60'","hr_zone":"Z1–Z2","distance":"8.3km"},{"date":"2026-07-22","day_name":"Wednesday","hari_label":"Wednesday","items":[{"text":"Easy road","highlight":false}],"duration":"60'","hr_zone":"Z1–Z2","distance":"8.3km"},{"date":"2026-07-23","day_name":"Thursday","hari_label":"Thursday","items":[{"text":"Strength","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 50'","hr_zone":"— / Z1–Z2","distance":"— / 6.9km"},{"date":"2026-07-24","day_name":"Friday","hari_label":"Friday","items":[{"text":"Easy road (shakeout)","highlight":false}],"duration":"40'","hr_zone":"Z1","distance":"5.5km"},{"date":"2026-07-25","day_name":"Saturday","hari_label":"Saturday","items":[{"text":"Easy road (long-run substitute)","highlight":false}],"duration":"80'","hr_zone":"Z1–Z2","distance":"11.0km"},{"date":"2026-07-26","day_name":"Sunday","hari_label":"Sunday","items":[{"text":"Easy road (recovery)","highlight":false}],"duration":"60'","hr_zone":"Z1–Z2","distance":"8.3km"}]},{"week":2,"phase":"Base","date_range":"27 Jul–2 Aug","label":"","total":"±52.8km","days":[{"date":"2026-07-27","day_name":"Monday","hari_label":"Monday","items":[{"text":"Strength","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 40'","hr_zone":"— / Z1–Z2","distance":"— / 5.5km"},{"date":"2026-07-28","day_name":"Tuesday","hari_label":"Tuesday","items":[{"text":"Easy road","highlight":false}],"duration":"60'","hr_zone":"Z1–Z2","distance":"8.3km"},{"date":"2026-07-29","day_name":"Wednesday","hari_label":"Wednesday","items":[{"text":"Easy road","highlight":false}],"duration":"60'","hr_zone":"Z1–Z2","distance":"8.3km"},{"date":"2026-07-30","day_name":"Thursday","hari_label":"Thursday","items":[{"text":"Strength","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 50'","hr_zone":"— / Z1–Z2","distance":"— / 6.9km"},{"date":"2026-07-31","day_name":"Friday","hari_label":"Friday","items":[{"text":"Easy road (shakeout)","highlight":false}],"duration":"40'","hr_zone":"Z1","distance":"5.5km"},{"date":"2026-08-01","day_name":"Saturday","hari_label":"Saturday","items":[{"text":"Treadmill incline — easy hike (trail substitute)","highlight":true}],"duration":"2h","hr_zone":"Z1–Z2","distance":"10.0km"},{"date":"2026-08-02","day_name":"Sunday","hari_label":"Sunday","items":[{"text":"Easy road (recovery)","highlight":false}],"duration":"60'","hr_zone":"Z1–Z2","distance":"8.3km"}]},{"week":3,"phase":"Base","date_range":"3–9 Aug","label":"light cutback","total":"±44.1km","days":[{"date":"2026-08-03","day_name":"Monday","hari_label":"Monday","items":[{"text":"Strength","highlight":false},{"text":"Easy road","highlight":false}],"duration":"25' + 30'","hr_zone":"— / Z1–Z2","distance":"— / 4.1km"},{"date":"2026-08-04","day_name":"Tuesday","hari_label":"Tuesday","items":[{"text":"Easy road","highlight":false}],"duration":"50'","hr_zone":"Z1–Z2","distance":"6.9km"},{"date":"2026-08-05","day_name":"Wednesday","hari_label":"Wednesday","items":[{"text":"Easy road","highlight":false}],"duration":"50'","hr_zone":"Z1–Z2","distance":"6.9km"},{"date":"2026-08-06","day_name":"Thursday","hari_label":"Thursday","items":[{"text":"Strength","highlight":false},{"text":"Easy road","highlight":false}],"duration":"25' + 40'","hr_zone":"— / Z1–Z2","distance":"— / 5.5km"},{"date":"2026-08-07","day_name":"Friday","hari_label":"Friday","items":[{"text":"Easy road (shakeout)","highlight":false}],"duration":"30'","hr_zone":"Z1","distance":"4.1km"},{"date":"2026-08-08","day_name":"Saturday","hari_label":"Saturday","items":[{"text":"Easy road (long-run substitute)","highlight":false}],"duration":"70'","hr_zone":"Z1–Z2","distance":"9.7km"},{"date":"2026-08-09","day_name":"Sunday","hari_label":"Sunday","items":[{"text":"Easy road (recovery)","highlight":false}],"duration":"50'","hr_zone":"Z1–Z2","distance":"6.9km"}]},{"week":4,"phase":"Base","date_range":"10–16 Aug","label":"","total":"±55.4km","days":[{"date":"2026-08-10","day_name":"Monday","hari_label":"Monday","items":[{"text":"Strength","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 45'","hr_zone":"— / Z1–Z2","distance":"— / 6.2km"},{"date":"2026-08-11","day_name":"Tuesday","hari_label":"Tuesday","items":[{"text":"Easy road","highlight":false}],"duration":"65'","hr_zone":"Z1–Z2","distance":"9.0km"},{"date":"2026-08-12","day_name":"Wednesday","hari_label":"Wednesday","items":[{"text":"Treadmill incline — Negative (4x8', incline 8→14%)","highlight":false}],"duration":"60'","hr_zone":"Z1–Z3","distance":"5.0km"},{"date":"2026-08-13","day_name":"Thursday","hari_label":"Thursday","items":[{"text":"Strength","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 55'","hr_zone":"— / Z1–Z2","distance":"— / 7.6km"},{"date":"2026-08-14","day_name":"Friday","hari_label":"Friday","items":[{"text":"Easy road (shakeout)","highlight":false}],"duration":"40'","hr_zone":"Z1","distance":"5.5km"},{"date":"2026-08-15","day_name":"Saturday","hari_label":"Saturday","items":[{"text":"Easy road (long-run substitute)","highlight":false}],"duration":"95'","hr_zone":"Z1–Z2","distance":"13.1km"},{"date":"2026-08-16","day_name":"Sunday","hari_label":"Sunday","items":[{"text":"Easy road (recovery)","highlight":false}],"duration":"65'","hr_zone":"Z1–Z2","distance":"9.0km"}]},{"week":5,"phase":"Base","date_range":"17–23 Aug","label":"","total":"±58.1km","days":[{"date":"2026-08-17","day_name":"Monday","hari_label":"Monday","items":[{"text":"Strength","highlight":false},{"text":"Easy road","highlight":false},{"text":"Sports massage #1 (maintenance, medium pressure)","highlight":true}],"duration":"30' + 45'","hr_zone":"— / Z1–Z2","distance":"— / 6.2km"},{"date":"2026-08-18","day_name":"Tuesday","hari_label":"Tuesday","items":[{"text":"Easy road","highlight":false}],"duration":"65'","hr_zone":"Z1–Z2","distance":"9.0km"},{"date":"2026-08-19","day_name":"Wednesday","hari_label":"Wednesday","items":[{"text":"Easy road","highlight":false}],"duration":"60'","hr_zone":"Z1–Z2","distance":"8.3km"},{"date":"2026-08-20","day_name":"Thursday","hari_label":"Thursday","items":[{"text":"Strength","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 55'","hr_zone":"— / Z1–Z2","distance":"— / 7.6km"},{"date":"2026-08-21","day_name":"Friday","hari_label":"Friday","items":[{"text":"Easy road (shakeout)","highlight":false}],"duration":"40'","hr_zone":"Z1","distance":"5.5km"},{"date":"2026-08-22","day_name":"Saturday","hari_label":"Saturday","items":[{"text":"Treadmill incline — easy hike (trail substitute)","highlight":true}],"duration":"2.5h","hr_zone":"Z1–Z2","distance":"12.5km"},{"date":"2026-08-23","day_name":"Sunday","hari_label":"Sunday","items":[{"text":"Easy road (recovery)","highlight":false}],"duration":"65'","hr_zone":"Z1–Z2","distance":"9.0km"}]},{"week":6,"phase":"Base","date_range":"24–30 Aug","label":"light cutback","total":"±45.5km","days":[{"date":"2026-08-24","day_name":"Monday","hari_label":"Monday","items":[{"text":"Strength","highlight":false},{"text":"Easy road","highlight":false}],"duration":"25' + 35'","hr_zone":"— / Z1–Z2","distance":"— / 4.8km"},{"date":"2026-08-25","day_name":"Tuesday","hari_label":"Tuesday","items":[{"text":"Easy road","highlight":false}],"duration":"55'","hr_zone":"Z1–Z2","distance":"7.6km"},{"date":"2026-08-26","day_name":"Wednesday","hari_label":"Wednesday","items":[{"text":"Treadmill incline — Pyramid (incline 8→12→16→12→8%)","highlight":false}],"duration":"50'","hr_zone":"Z1–Z3","distance":"4.2km"},{"date":"2026-08-27","day_name":"Thursday","hari_label":"Thursday","items":[{"text":"Strength","highlight":false},{"text":"Easy road","highlight":false}],"duration":"25' + 45'","hr_zone":"— / Z1–Z2","distance":"— / 6.2km"},{"date":"2026-08-28","day_name":"Friday","hari_label":"Friday","items":[{"text":"Easy road (shakeout)","highlight":false}],"duration":"30'","hr_zone":"Z1","distance":"4.1km"},{"date":"2026-08-29","day_name":"Saturday","hari_label":"Saturday","items":[{"text":"Easy road (long-run substitute)","highlight":false}],"duration":"80'","hr_zone":"Z1–Z2","distance":"11.0km"},{"date":"2026-08-30","day_name":"Sunday","hari_label":"Sunday","items":[{"text":"Easy road (recovery)","highlight":false}],"duration":"55'","hr_zone":"Z1–Z2","distance":"7.6km"}]},{"week":7,"phase":"Base","date_range":"31 Aug–6 Sep","label":"close of the no-trail phase","total":"±60.6km","days":[{"date":"2026-08-31","day_name":"Monday","hari_label":"Monday","items":[{"text":"Strength","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 45'","hr_zone":"— / Z1–Z2","distance":"— / 6.2km"},{"date":"2026-09-01","day_name":"Tuesday","hari_label":"Tuesday","items":[{"text":"Easy road","highlight":false}],"duration":"65'","hr_zone":"Z1–Z2","distance":"9.0km"},{"date":"2026-09-02","day_name":"Wednesday","hari_label":"Wednesday","items":[{"text":"Easy road","highlight":false}],"duration":"60'","hr_zone":"Z1–Z2","distance":"8.3km"},{"date":"2026-09-03","day_name":"Thursday","hari_label":"Thursday","items":[{"text":"Strength","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 55'","hr_zone":"— / Z1–Z2","distance":"— / 7.6km"},{"date":"2026-09-04","day_name":"Friday","hari_label":"Friday","items":[{"text":"Easy road (shakeout)","highlight":false}],"duration":"40'","hr_zone":"Z1","distance":"5.5km"},{"date":"2026-09-05","day_name":"Saturday","hari_label":"Saturday","items":[{"text":"Treadmill incline — easy hike (trail substitute, key session)","highlight":true}],"duration":"3h","hr_zone":"Z1–Z2","distance":"15.0km"},{"date":"2026-09-06","day_name":"Sunday","hari_label":"Sunday","items":[{"text":"Easy road (recovery)","highlight":false}],"duration":"65'","hr_zone":"Z1–Z2","distance":"9.0km"}]},{"week":8,"phase":"Base","date_range":"7–13 Sep","label":"🌲 First trail, close of Base phase","total":"±56.9km","days":[{"date":"2026-09-07","day_name":"Monday","hari_label":"Monday","items":[{"text":"Strength — trekking pole movements (arm drive, anti-rotation core, grip/forearm)","highlight":true},{"text":"Easy road","highlight":false},{"text":"Sports massage #2 (48h post key session W7, deep tissue focus on calves/quads)","highlight":true}],"duration":"30' + 45'","hr_zone":"— / Z1–Z2","distance":"— / 6.2km"},{"date":"2026-09-08","day_name":"Tuesday","hari_label":"Tuesday","items":[{"text":"Easy road","highlight":false}],"duration":"65'","hr_zone":"Z1–Z2","distance":"9.0km"},{"date":"2026-09-09","day_name":"Wednesday","hari_label":"Wednesday","items":[{"text":"Treadmill incline — Tempo (30' continuous, incline 10%)","highlight":false}],"duration":"45'","hr_zone":"Z1–Z3","distance":"3.8km"},{"date":"2026-09-10","day_name":"Thursday","hari_label":"Thursday","items":[{"text":"Strength — general core/mobility/flexibility","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 55'","hr_zone":"— / Z1–Z2","distance":"— / 7.6km"},{"date":"2026-09-11","day_name":"Friday","hari_label":"Friday","items":[{"text":"Easy road (shakeout)","highlight":false}],"duration":"40'","hr_zone":"Z1","distance":"5.5km"},{"date":"2026-09-12","day_name":"Saturday","hari_label":"Saturday","items":[{"text":"Easy trail — first time since W1","highlight":true},{"text":"start fueling experimentation (try 1 product/strategy, evaluate tolerance)","highlight":false}],"duration":"2.5h","hr_zone":"Z1–Z3","distance":"15.8km"},{"date":"2026-09-13","day_name":"Sunday","hari_label":"Sunday","items":[{"text":"Easy road (recovery)","highlight":false}],"duration":"65'","hr_zone":"Z1–Z2","distance":"9.0km"}]},{"week":9,"phase":"Transition","date_range":"14–20 Sep","label":"","total":"±60.4km","days":[{"date":"2026-09-14","day_name":"Monday","hari_label":"Monday","items":[{"text":"Strength — trekking pole movements (continued)","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 45'","hr_zone":"— / Z1–Z2","distance":"— / 6.2km"},{"date":"2026-09-15","day_name":"Tuesday","hari_label":"Tuesday","items":[{"text":"Speed flat — Interval short-medium: WU15'+6x400m(rest90\")+CD10'","highlight":true}],"duration":"≈45'","hr_zone":"Z4–Z5 during intervals","distance":"≈6.7km"},{"date":"2026-09-16","day_name":"Wednesday","hari_label":"Wednesday","items":[{"text":"Easy road","highlight":false}],"duration":"60'","hr_zone":"Z1–Z2","distance":"8.3km"},{"date":"2026-09-17","day_name":"Thursday","hari_label":"Thursday","items":[{"text":"Strength — general core/mobility/flexibility","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 55'","hr_zone":"— / Z1–Z2","distance":"— / 7.6km"},{"date":"2026-09-18","day_name":"Friday","hari_label":"Friday","items":[{"text":"Easy road (shakeout)","highlight":false}],"duration":"40'","hr_zone":"Z1","distance":"5.5km"},{"date":"2026-09-19","day_name":"Saturday","hari_label":"Saturday","items":[{"text":"Long trail (run ~50–60%) — start using trekking poles on trail (focus on uphill push & downhill stability technique)","highlight":true},{"text":"continued fueling experimentation","highlight":false}],"duration":"3h","hr_zone":"Z1–Z3","distance":"≈17.1km"},{"date":"2026-09-20","day_name":"Sunday","hari_label":"Sunday","items":[{"text":"Easy road (recovery)","highlight":false}],"duration":"65'","hr_zone":"Z1–Z2","distance":"9.0km"}]},{"week":10,"phase":"Transition","date_range":"21–27 Sep","label":"","total":"±68.3km","days":[{"date":"2026-09-21","day_name":"Monday","hari_label":"Monday","items":[{"text":"Strength — trekking pole movements","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 45'","hr_zone":"— / Z1–Z2","distance":"— / 6.2km"},{"date":"2026-09-22","day_name":"Tuesday","hari_label":"Tuesday","items":[{"text":"Speed flat — Tempo: WU15'+6km tempo+CD10'","highlight":true}],"duration":"≈31'","hr_zone":"Z4 during tempo","distance":"≈9.4km"},{"date":"2026-09-23","day_name":"Wednesday","hari_label":"Wednesday","items":[{"text":"Easy road","highlight":false}],"duration":"60'","hr_zone":"Z1–Z2","distance":"8.3km"},{"date":"2026-09-24","day_name":"Thursday","hari_label":"Thursday","items":[{"text":"Speed flat — Interval ultra: WU15'+5x1000m(rest3')+CD10'","highlight":true}],"duration":"≈40'","hr_zone":"Z4–Z5 during intervals","distance":"≈9.9km"},{"date":"2026-09-25","day_name":"Friday","hari_label":"Friday","items":[{"text":"Easy road (shakeout)","highlight":false}],"duration":"40'","hr_zone":"Z1","distance":"5.5km"},{"date":"2026-09-26","day_name":"Saturday","hari_label":"Saturday","items":[{"text":"Long trail (run ~55–65%) — trekking poles (technique getting more natural)","highlight":false},{"text":"continued fueling","highlight":false}],"duration":"3.5h","hr_zone":"Z1–Z3/Z4","distance":"≈20.0km"},{"date":"2026-09-27","day_name":"Sunday","hari_label":"Sunday","items":[{"text":"Easy road (recovery)","highlight":false}],"duration":"65'","hr_zone":"Z1–Z2","distance":"9.0km"}]},{"week":11,"phase":"Peak","date_range":"28 Sep–4 Oct","label":"Hill repeats: Steady","total":"±68.1km","days":[{"date":"2026-09-28","day_name":"Monday","hari_label":"Monday","items":[{"text":"Strength — downhill/uphill specific (eccentric step-down, uphill power/box step-up)","highlight":true},{"text":"Easy road","highlight":false}],"duration":"30' + 45'","hr_zone":"— / Z1–Z2","distance":"— / 6.2km"},{"date":"2026-09-29","day_name":"Tuesday","hari_label":"Tuesday","items":[{"text":"Easy road","highlight":false}],"duration":"60'","hr_zone":"Z1–Z2","distance":"8.3km"},{"date":"2026-09-30","day_name":"Wednesday","hari_label":"Wednesday","items":[{"text":"Speed trail — Steady loop 6km (3km up/3km down)","highlight":true},{"text":"WU/CD — use trekking poles on uphill","highlight":false}],"duration":"~65'","hr_zone":"Z3–Z4 up / Z1–Z2 down","distance":"8.5km"},{"date":"2026-10-01","day_name":"Thursday","hari_label":"Thursday","items":[{"text":"Strength — trekking pole movements","highlight":false},{"text":"core/mobility","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 55'","hr_zone":"— / Z1–Z2","distance":"— / 7.6km"},{"date":"2026-10-02","day_name":"Friday","hari_label":"Friday","items":[{"text":"Easy road (shakeout)","highlight":false}],"duration":"40'","hr_zone":"Z1","distance":"5.5km"},{"date":"2026-10-03","day_name":"Saturday","hari_label":"Saturday","items":[{"text":"Long trail (run 60–70%) — trekking poles full session","highlight":true},{"text":"continued fueling","highlight":false}],"duration":"4.5h","hr_zone":"Z3–Z4","distance":"≈25.7km"},{"date":"2026-10-04","day_name":"Sunday","hari_label":"Sunday","items":[{"text":"Easy trail (recovery)","highlight":false}],"duration":"60'","hr_zone":"Z1–Z2","distance":"6.3km"}]},{"week":12,"phase":"Peak","date_range":"5–11 Oct","label":"Hill repeats: Pyramid + Back-to-back weekend","total":"±69.0km","days":[{"date":"2026-10-05","day_name":"Monday","hari_label":"Monday","items":[{"text":"Strength — downhill/uphill specific","highlight":false},{"text":"Easy road","highlight":false},{"text":"Sports massage #3 (48h post 4.5h long trail W11, focus on glutes/quads/IT band)","highlight":true}],"duration":"30' + 45'","hr_zone":"— / Z1–Z2","distance":"— / 6.2km"},{"date":"2026-10-06","day_name":"Tuesday","hari_label":"Tuesday","items":[{"text":"Easy road","highlight":false}],"duration":"60'","hr_zone":"Z1–Z2","distance":"8.3km"},{"date":"2026-10-07","day_name":"Wednesday","hari_label":"Wednesday","items":[{"text":"Speed trail — Pyramid loop ±8km total (1-2-3-2-1km up)","highlight":true},{"text":"WU/CD — trekking poles uphill","highlight":false}],"duration":"~80'","hr_zone":"Z3–Z4 up / Z1–Z2 down","distance":"10.5km"},{"date":"2026-10-08","day_name":"Thursday","hari_label":"Thursday","items":[{"text":"Strength — trekking pole movements","highlight":false},{"text":"core/mobility","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 55'","hr_zone":"— / Z1–Z2","distance":"— / 7.6km"},{"date":"2026-10-09","day_name":"Friday","hari_label":"Friday","items":[{"text":"Easy road (shakeout)","highlight":false}],"duration":"40'","hr_zone":"Z1","distance":"5.5km"},{"date":"2026-10-10","day_name":"Saturday","hari_label":"Saturday","items":[{"text":"Long trail (day 1) (run 60–70%) — trekking poles","highlight":true},{"text":"continued fueling","highlight":false}],"duration":"3.5h","hr_zone":"Z3–Z4","distance":"≈20.0km"},{"date":"2026-10-11","day_name":"Sunday","hari_label":"Sunday","items":[{"text":"Long trail (day 2) (run 60–70%, tired legs) — trekking poles, testing how much they help once legs are fatigued","highlight":true}],"duration":"2h","hr_zone":"Z1–Z3","distance":"≈10.9km"}]},{"week":13,"phase":"Peak","date_range":"12–18 Oct","label":"Hill repeats: Negative Split + Night Start Long Trail","total":"±72.3km","days":[{"date":"2026-10-12","day_name":"Monday","hari_label":"Monday","items":[{"text":"Strength — downhill/uphill specific","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 45'","hr_zone":"— / Z1–Z2","distance":"— / 6.2km"},{"date":"2026-10-13","day_name":"Tuesday","hari_label":"Tuesday","items":[{"text":"Easy road","highlight":false}],"duration":"60'","hr_zone":"Z1–Z2","distance":"8.3km"},{"date":"2026-10-14","day_name":"Wednesday","hari_label":"Wednesday","items":[{"text":"Speed trail — Negative split loop 6km (second half faster)","highlight":true},{"text":"WU/CD — trekking poles","highlight":false}],"duration":"~65'","hr_zone":"Z3–Z4 up / Z1–Z2 down","distance":"8.5km"},{"date":"2026-10-15","day_name":"Thursday","hari_label":"Thursday","items":[{"text":"Strength — trekking pole movements","highlight":false},{"text":"core/mobility","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 55'","hr_zone":"— / Z1–Z2","distance":"— / 7.6km"},{"date":"2026-10-16","day_name":"Friday","hari_label":"Friday","items":[{"text":"Easy road (shakeout)","highlight":false}],"duration":"40'","hr_zone":"Z1","distance":"5.5km"},{"date":"2026-10-17","day_name":"Saturday","hari_label":"Saturday","items":[{"text":"Long trail — Night start, starting 01:00 (run 60–70%) — trekking poles full","highlight":true},{"text":"fueling: LOCK final race-day nutrition plan during this session","highlight":true}],"duration":"5h","hr_zone":"Z3–Z4","distance":"≈27.3km"},{"date":"2026-10-18","day_name":"Sunday","hari_label":"Sunday","items":[{"text":"Easy road (recovery)","highlight":false}],"duration":"60'","hr_zone":"Z1–Z2","distance":"8.3km"}]},{"week":14,"phase":"Peak","date_range":"19–25 Oct","label":"Hill repeats: Race Pace Simulation + Final Long Trail","total":"±72.9km","days":[{"date":"2026-10-19","day_name":"Monday","hari_label":"Monday","items":[{"text":"Strength — downhill/uphill specific (last before taper)","highlight":true},{"text":"Easy road","highlight":false}],"duration":"30' + 40'","hr_zone":"— / Z1–Z2","distance":"— / 5.5km"},{"date":"2026-10-20","day_name":"Tuesday","hari_label":"Tuesday","items":[{"text":"Easy road","highlight":false},{"text":"Sports massage #4 (72h post Race Simulation W13, extra gap since its effects hit hardest, full deep tissue)","highlight":true}],"duration":"55'","hr_zone":"Z1–Z2","distance":"7.6km"},{"date":"2026-10-21","day_name":"Wednesday","hari_label":"Wednesday","items":[{"text":"Speed trail — Race pace simulation loop 8km (4km up/4km down)","highlight":true},{"text":"WU/CD — trekking poles","highlight":false}],"duration":"~90'","hr_zone":"Z3–Z4 up / Z1–Z2 down","distance":"10.5km"},{"date":"2026-10-22","day_name":"Thursday","hari_label":"Thursday","items":[{"text":"Strength — trekking pole movements","highlight":false},{"text":"core/mobility","highlight":false},{"text":"Easy road","highlight":false}],"duration":"30' + 50'","hr_zone":"— / Z1–Z2","distance":"— / 6.9km"},{"date":"2026-10-23","day_name":"Friday","hari_label":"Friday","items":[{"text":"Easy road (shakeout)","highlight":false}],"duration":"35'","hr_zone":"Z1","distance":"4.8km"},{"date":"2026-10-24","day_name":"Saturday","hari_label":"Saturday","items":[{"text":"Long trail — last before taper (run 70–80%) — trekking poles full","highlight":true},{"text":"fueling rehearsal (plan locked in during W13)","highlight":false}],"duration":"5h","hr_zone":"Z3–Z4","distance":"≈30.0km"},{"date":"2026-10-25","day_name":"Sunday","hari_label":"Sunday","items":[{"text":"Easy road (recovery)","highlight":false}],"duration":"55'","hr_zone":"Z1–Z2","distance":"7.6km"}]},{"week":15,"phase":"Taper","date_range":"26 Oct–1 Nov","label":"down ~30% from peak","total":"±44.1km","days":[{"date":"2026-10-26","day_name":"Monday","hari_label":"Monday","items":[{"text":"Strength (light, core/mobility only — downhill/uphill specific & trekking pole strength work stopped)","highlight":true},{"text":"Easy road","highlight":false},{"text":"Sports massage #5 (LAST deep tissue, ±12 days before race)","highlight":true}],"duration":"20' + 30'","hr_zone":"— / Z1–Z2","distance":"— / 4.1km"},{"date":"2026-10-27","day_name":"Tuesday","hari_label":"Tuesday","items":[{"text":"Easy road","highlight":false}],"duration":"45'","hr_zone":"Z1–Z2","distance":"6.2km"},{"date":"2026-10-28","day_name":"Wednesday","hari_label":"Wednesday","items":[{"text":"Speed trail — light loop 4km (2km up/2km down)","highlight":true},{"text":"WU/CD — light trekking poles","highlight":false}],"duration":"~50'","hr_zone":"Z3 up / Z1 down","distance":"6.5km"},{"date":"2026-10-29","day_name":"Thursday","hari_label":"Thursday","items":[{"text":"Strength (light) — core/mobility/flexibility only","highlight":false},{"text":"Easy road","highlight":false}],"duration":"20' + 30'","hr_zone":"— / Z1–Z2","distance":"— / 4.1km"},{"date":"2026-10-30","day_name":"Friday","hari_label":"Friday","items":[{"text":"Easy road (shakeout)","highlight":false}],"duration":"25'","hr_zone":"Z1","distance":"3.4km"},{"date":"2026-10-31","day_name":"Saturday","hari_label":"Saturday","items":[{"text":"Long trail (moderate, run 60–70%) — trekking poles (light dress rehearsal)","highlight":false},{"text":"fueling: rehearse final plan, don't try new products","highlight":true}],"duration":"2.5h","hr_zone":"Z1–Z3","distance":"≈14.3km"},{"date":"2026-11-01","day_name":"Sunday","hari_label":"Sunday","items":[{"text":"Easy road (recovery)","highlight":false}],"duration":"40'","hr_zone":"Z1–Z2","distance":"5.5km"}]},{"week":16,"phase":"Taper","date_range":"2–8 Nov","label":"RACE WEEK, down ~40%+","total":"±79.8km","days":[{"date":"2026-11-02","day_name":"Monday","hari_label":"Monday","items":[{"text":"Easy road (shakeout)","highlight":false}],"duration":"20'","hr_zone":"Z1–Z2","distance":"2.8km"},{"date":"2026-11-03","day_name":"Tuesday","hari_label":"Tuesday","items":[{"text":"Easy road","highlight":false},{"text":"light strides","highlight":false}],"duration":"20' + 3x20\"","hr_zone":"Z1–Z2, strides Z3","distance":"2.8km"},{"date":"2026-11-04","day_name":"Wednesday","hari_label":"Wednesday","items":[{"text":"Easy road (shakeout)","highlight":false},{"text":"Sports massage #6 (light flush only, NO deep tissue, 3 days pre-race)","highlight":true}],"duration":"15'","hr_zone":"Z1","distance":"2.1km"},{"date":"2026-11-05","day_name":"Thursday","hari_label":"Thursday","items":[{"text":"Easy road (shakeout)","highlight":false}],"duration":"15'","hr_zone":"Z1","distance":"2.1km"},{"date":"2026-11-06","day_name":"Friday","hari_label":"Friday","items":[{"text":"Full rest","highlight":true}],"duration":"—","hr_zone":"—","distance":"0km"},{"date":"2026-11-07","day_name":"Saturday","hari_label":"**Saturday 7/11**","items":[{"text":"🏁 RACE DAY — BTS100 70K","highlight":true}],"duration":"Start 01:00 local time, target finish 13–15h — execute the trekking pole & fueling plan you've trained, **no last-minute changes**","hr_zone":"—","distance":"**70km literal**"},{"date":"2026-11-08","day_name":"Sunday","hari_label":"Sunday 8/11","items":[{"text":"Total recovery","highlight":false}],"duration":"Easy walk","hr_zone":"—","distance":"0km"}]}];
+
+const PHASE_COLOR = { Base:'var(--moss)', Transisi:'var(--transisi)', Peak:'var(--peak)', Taper:'var(--taper)' };
+const PHASE_HEX = { Base:'#7f9d6f', Transisi:'#cf9f3f', Peak:'#c1552c', Taper:'#7fa3b3' };
+
+function todayISO(){
+  const d = new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+const TODAY = todayISO();
+
+function parseKm(str){
+  const m = str.replace(/\./g,'').match(/([\d,]+)/);
+  if(!m) return 0;
+  return parseFloat(m[1].replace(',','.'));
+}
+
+// flatten all days
+const ALL_DAYS = [];
+PROGRAM_DATA.forEach(w => w.days.forEach(d => ALL_DAYS.push({...d, week:w.week, phase:w.phase})));
+// find actual race day by scanning for the flag text
+let raceDayDate = null;
+ALL_DAYS.forEach(d => { d.items.forEach(it => { if(/RACE DAY/i.test(it.text)) raceDayDate = d.date; }); });
+
+let currentWeek = 1;
+// determine default week based on today
+for(const w of PROGRAM_DATA){
+  const first = w.days[0].date, last = w.days[6].date;
+  if(TODAY >= first && TODAY <= last){ currentWeek = w.week; }
+}
+if(TODAY < PROGRAM_DATA[0].days[0].date) currentWeek = 1;
+if(raceDayDate && TODAY > ALL_DAYS[ALL_DAYS.length-1].date) currentWeek = 16;
+
+// ---------- storage ----------
+let checkState = {};
+let storageReady = false;
+
+async function loadState(){
+  try{
+    const raw = localStorage.getItem('checklist-state');
+    checkState = raw ? JSON.parse(raw) : {};
+  }catch(e){ checkState = {}; }
+  storageReady = true;
+  render();
+}
+let saveTimer = null;
+function saveState(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try{ localStorage.setItem('checklist-state', JSON.stringify(checkState)); }
+    catch(e){ showToast('Failed to save, try again'); }
+  }, 200);
+}
+
+function keyFor(date, idx){ return date + '#' + idx; }
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._h);
+  t._h = setTimeout(()=>t.classList.remove('show'), 1600);
+}
+
+// ---------- elevation profile (signature) ----------
+function renderElevProfile(){
+  const svg = document.getElementById('elevSvg');
+  const W = 800, H = 170, padL = 8, padR = 8, padB = 22, padT = 14;
+  const weeks = PROGRAM_DATA;
+  const totals = weeks.map(w => parseKm(w.total));
+  const max = Math.max(...totals);
+  const n = weeks.length;
+  const stepX = (W - padL - padR) / (n - 1);
+  const yFor = km => padT + (H - padT - padB) * (1 - km / (max * 1.05));
+
+  let path = `M ${padL} ${H - padB} `;
+  let linePts = [];
+  weeks.forEach((w,i) => {
+    const x = padL + i * stepX;
+    const y = yFor(totals[i]);
+    linePts.push([x,y,w]);
+    path += `${i===0? 'L':'L'} ${x} ${y} `;
+  });
+  path += `L ${padL + (n-1)*stepX} ${H-padB} Z`;
+
+  // build colored area segments per phase, plus a top stroke line
+  let segs = '';
+  for(let i=0;i<linePts.length-1;i++){
+    const [x1,y1,w1] = linePts[i];
+    const [x2,y2] = linePts[i+1];
+    const color = PHASE_HEX[w1.phase];
+    segs += `<path d="M ${x1} ${H-padB} L ${x1} ${y1} L ${x2} ${y2} L ${x2} ${H-padB} Z" fill="${color}" opacity="0.28"/>`;
+    segs += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="2.4" stroke-linecap="round"/>`;
+  }
+
+  // markers: W1 start, W8 first trail, W13 fueling lock, race day flag
+  const markerWeeks = {1:'Start', 8:'First trail', 13:'Fueling lock'};
+  let markers = '';
+  linePts.forEach(([x,y,w], i) => {
+    if(markerWeeks[w.week]){
+      markers += `<circle cx="${x}" cy="${y}" r="3.2" fill="var(--ink)" opacity="0.85"/>`;
+      markers += `<text x="${x}" y="${y - 9}" font-family="IBM Plex Mono" font-size="9" fill="#8fa08f" text-anchor="${i<2?'start':(i>n-3?'end':'middle')}">${markerWeeks[w.week]}</text>`;
+    }
+  });
+  // race flag at end
+  const [lx,ly] = linePts[linePts.length-1];
+  markers += `<text x="${lx}" y="${ly-9}" font-family="IBM Plex Mono" font-size="10" fill="#f2b84b" text-anchor="end">🏁 Race</text>`;
+
+  // "you are here" marker
+  let hereX = padL;
+  if(TODAY < weeks[0].days[0].date){ hereX = padL; }
+  else {
+    let idx = weeks.findIndex(w => TODAY <= w.days[6].date);
+    if(idx === -1) idx = n-1;
+    const w = weeks[idx];
+    const dayIdx = w.days.findIndex(d => d.date === TODAY);
+    const frac = dayIdx >= 0 ? dayIdx/6 : 0;
+    hereX = padL + (idx + frac) * stepX;
+  }
+  const hereY = H - padB;
+  markers += `<line x1="${hereX}" y1="${padT}" x2="${hereX}" y2="${hereY}" stroke="#f2b84b" stroke-width="1.4" stroke-dasharray="2,3"/>`;
+  markers += `<circle cx="${hereX}" cy="${hereY}" r="4.5" fill="#f2b84b"/>`;
+
+  svg.innerHTML = segs + markers;
+  svg.style.setProperty('--h', H);
+  document.getElementById('elevRangeLabel').textContent = `${Math.min(...totals).toFixed(0)}–${Math.max(...totals).toFixed(0)} km/week`;
+
+  // click to jump to week
+  svg.onclick = (e) => {
+    const rect = svg.getBoundingClientRect();
+    const relX = (e.clientX - rect.left) / rect.width * W;
+    let closest = 0, best = Infinity;
+    linePts.forEach(([x,y,w], i) => { const d = Math.abs(x-relX); if(d<best){best=d; closest=i;} });
+    currentWeek = weeks[closest].week;
+    render();
+  };
+}
+
+// ---------- week rail ----------
+function renderWeekRail(){
+  const rail = document.getElementById('weekRail');
+  rail.innerHTML = '';
+  PROGRAM_DATA.forEach(w => {
+    const el = document.createElement('div');
+    el.className = 'week-pill' + (w.week===currentWeek ? ' active':'') + (w.week === currentWeekOf(TODAY) ? ' today-week':'');
+    el.innerHTML = `<span class="w">W${w.week}</span>${w.phase}`;
+    const pct = weekCompletionPct(w);
+    if(pct > 0){
+      const dot = document.createElement('div');
+      dot.className='ring';
+      dot.style.background = pct >= 100 ? '#f2b84b' : PHASE_HEX[w.phase];
+      el.appendChild(dot);
+    }
+    el.onclick = () => { currentWeek = w.week; render(); };
+    rail.appendChild(el);
+  });
+  // scroll active into view
+  const active = rail.querySelector('.active');
+  if(active) active.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+}
+
+function currentWeekOf(dateStr){
+  for(const w of PROGRAM_DATA){ if(dateStr>=w.days[0].date && dateStr<=w.days[6].date) return w.week; }
+  return -1;
+}
+
+function weekCompletionPct(w){
+  let total=0, done=0;
+  w.days.forEach(d => d.items.forEach((it,idx) => { total++; if(checkState[keyFor(d.date,idx)]) done++; }));
+  return total ? Math.round(done/total*100) : 0;
+}
+
+// ---------- day cards ----------
+function renderDays(){
+  const week = PROGRAM_DATA.find(w => w.week === currentWeek);
+  document.getElementById('weekTitle').textContent = `Week ${week.week} · ${week.date_range}`;
+  const tag = document.getElementById('phaseTag');
+  tag.textContent = week.phase;
+  tag.style.color = PHASE_HEX[week.phase];
+  document.getElementById('weekMeta').textContent = `Total ${week.total}`;
+
+  const container = document.getElementById('daysContainer');
+  container.innerHTML = '';
+
+  week.days.forEach(day => {
+    const isRace = day.items.some(it => /RACE DAY/i.test(it.text));
+    const isToday = day.date === TODAY;
+    const isPast = day.date < TODAY;
+    const isFuture = day.date > TODAY;
+
+    const card = document.createElement('div');
+    card.className = 'day-card' + (isToday?' is-today':'') + (isRace?' is-race':'') + (isFuture?' is-future':'');
+
+    let doneCount = 0;
+    day.items.forEach((it,idx) => { if(checkState[keyFor(day.date, idx)]) doneCount++; });
+    if(isPast && doneCount < day.items.length) card.classList.add('is-past-incomplete');
+
+    const head = document.createElement('div');
+    head.className = 'day-head';
+    head.innerHTML = `
+      <div class="day-head-left">
+        <span class="day-name">${day.day_name}</span>
+        <span class="day-date">${formatDate(day.date)}</span>
+        ${isToday ? '<span class="today-badge">TODAY</span>' : ''}
+      </div>
+      <div class="day-progress">${doneCount}/${day.items.length}</div>
+    `;
+    card.appendChild(head);
+
+    const list = document.createElement('div');
+    list.className = 'item-list';
+    day.items.forEach((it, idx) => {
+      const done = !!checkState[keyFor(day.date, idx)];
+      const row = document.createElement('div');
+      row.className = 'item' + (done?' done':'') + (isFuture?' disabled':'');
+      const displayText = it.highlight ? `<b class="hl">${escapeHtml(it.text)}</b>` : escapeHtml(it.text);
+      row.innerHTML = `
+        <div class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="#0c1210" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="item-text">${displayText}</div>
+      `;
+      if(isFuture){
+        row.onclick = () => showToast("This date hasn't arrived yet");
+      } else {
+        row.onclick = () => {
+          const k = keyFor(day.date, idx);
+          checkState[k] = !checkState[k];
+          saveState();
+          render();
+        };
+      }
+      list.appendChild(row);
+    });
+    card.appendChild(list);
+
+    const tags = document.createElement('div');
+    tags.className = 'tag-row';
+    tags.innerHTML = `
+      <span class="meta-chip">⏱ ${day.duration}</span>
+      <span class="meta-chip">${day.hr_zone}</span>
+      <span class="meta-chip">📍 ${day.distance}</span>
+      ${/massage/i.test(day.items.map(i=>i.text).join(' ')) ? '<span class="meta-chip massage">💆 Sports massage</span>' : ''}
+    `;
+    card.appendChild(tags);
+
+    container.appendChild(card);
+  });
+}
+
+function escapeHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+const DAY_MONTH_ID = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function formatDate(iso){
+  const [y,m,d] = iso.split('-').map(Number);
+  return `${d} ${DAY_MONTH_ID[m-1]}`;
+}
+
+// ---------- countdown & stats ----------
+function renderCountdown(){
+  const chip = document.getElementById('countdownChip');
+  if(!raceDayDate){ chip.textContent=''; return; }
+  const race = new Date(raceDayDate+'T01:00:00');
+  const now = new Date();
+  const diffDays = Math.ceil((race - now) / 86400000);
+  if(diffDays > 0){ chip.textContent = `H-${diffDays}`; }
+  else if(diffDays === 0){ chip.textContent = `TODAY 🏁`; }
+  else { chip.textContent = `Done`; }
+  document.getElementById('statDaysLeft').textContent = diffDays > 0 ? diffDays : (diffDays===0?'0':'—');
+}
+
+function renderStats(){
+  let total=0, done=0;
+  ALL_DAYS.forEach(d => d.items.forEach((it,idx) => { total++; if(checkState[keyFor(d.date,idx)]) done++; }));
+  document.getElementById('statDone').textContent = done;
+  document.getElementById('statPct').textContent = total ? Math.round(done/total*100)+'%' : '0%';
+}
+
+function render(){
+  if(!storageReady) return;
+  renderElevProfile();
+  renderWeekRail();
+  renderDays();
+  renderCountdown();
+  renderStats();
+}
+
+document.getElementById('resetBtn').onclick = () => {
+  if(confirm('Reset all checklist checkmarks? This action cannot be undone.')){
+    checkState = {};
+    saveState();
+    render();
+    showToast('All checkmarks reset');
+  }
+};
+
+function applyThemeColorMeta(theme){
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute('content', theme === 'light' ? '#f4f1e6' : '#0c1210');
+}
+(function initTheme(){
+  let stored = null;
+  try{ stored = localStorage.getItem('theme-preference'); }catch(e){}
+  const current = document.documentElement.getAttribute('data-theme') || stored || 'dark';
+  document.documentElement.setAttribute('data-theme', current);
+  applyThemeColorMeta(current);
+})();
+document.getElementById('themeToggle').onclick = () => {
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  const next = isLight ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+  applyThemeColorMeta(next);
+  try{ localStorage.setItem('theme-preference', next); }catch(e){}
+};
+
+loadState();
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
